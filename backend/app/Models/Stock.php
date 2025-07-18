@@ -11,5 +11,9 @@ class Stock extends Model
     'sku',
     'quantity',
     'price',
+    'vendor',
+    'cost_price',
+    'listed_at',
+    'updated_date',
     ];
 }

@@ -16,6 +16,10 @@ return new class () extends Migration {
             $table->string('sku')->nullable();
             $table->integer('quantity')->default(0);
             $table->integer('price')->default(0);
+            $table->string('vendor')->nullable();
+            $table->integer('cost_price')->default(0);
+            $table->dateTime('listed_at')->nullable();
+            $table->dateTime('updated_date')->nullable();
             $table->timestamps();
         });
     }

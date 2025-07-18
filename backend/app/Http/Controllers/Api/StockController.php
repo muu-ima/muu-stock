@@ -27,12 +27,18 @@ class StockController extends Controller
     {
         try {
             $validated = $request->validate([
-                'title' => 'required|string|max:255',
-                'sku' => 'nullable|string|max:255',
-                'quantity' => 'required|integer',
-                'price' => 'required|integer',
-            ]);
+    'title' => 'required|string|max:255',
+    'sku' => 'nullable|string|max:255',
+    'quantity' => 'required|integer',
+    'price' => 'required|integer',
+    'vendor' => 'nullable|string|max:255',
+    'cost_price' => 'nullable|integer',
+    'listed_at' => 'nullable|date',
+    'updated_date' => 'nullable|date',
+]);
+
             $stock = Stock::create($validated);
+
 
             return new StockResource($stock);
         } catch (\Exception $e) {
