@@ -2,25 +2,22 @@ FROM php:8.2-fpm
 
 # 必要なパッケージをインストール
 RUN apt-get update && \
-    apt-get install -y nginx supervisor && \
-    docker-php-ext-install pdo pdo_mysql && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y git unzip libzip-dev zip && \
+    docker-php-ext-install pdo_mysql zip
 
-# 作業ディレクトリ
-WORKDIR /var/www/html
+# Composerのインストール
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html/backend
 
 # アプリのソースをコピー
-COPY . /var/www/html
+COPY . /var/www/html/backend
 
-# nginx設定（必要に応じて調整）
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+# Composerの依存インストール
+RUN composer install --no-interaction --optimize-autoloader
 
-# supervisor設定
-COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Laravelのキャッシュクリア
+RUN php artisan config:clear
 
-# ポート開放
-EXPOSE 80
-
-# supervisorでnginx + php-fpmを起動
-# CMD ["/usr/bin/supervisord"]
-CMD ["sleep", "infinity"]
+EXPOSE 9000
+CMD ["php-fpm"]

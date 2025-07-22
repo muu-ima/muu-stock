@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import ProductForm, { ProductFormData } from '@/components/ProductForm';
 
 type Stock = {
   id: number;
