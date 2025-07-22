@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.2
 
 # 必要なパッケージをインストール
 RUN apt-get update && \
@@ -13,11 +13,20 @@ WORKDIR /var/www/html/backend
 # アプリのソースをコピー
 COPY . /var/www/html/backend
 
-# Composerの依存インストール
+# Composer install
 RUN composer install --no-interaction --optimize-autoloader
 
-# Laravelのキャッシュクリア
+# .env の用意（最初だけ必要）
+RUN cp .env.example .env || true
+
+# APPキー生成（既にあれば無視）
+RUN php artisan key:generate || true
+
+# キャッシュクリア
 RUN php artisan config:clear
 
-EXPOSE 9000
-CMD ["php-fpm"]
+# ポート開放
+EXPOSE 8000
+
+# Laravel 開発サーバーで起動
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
