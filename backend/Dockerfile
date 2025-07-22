@@ -22,4 +22,5 @@ COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 EXPOSE 80
 
 # supervisorでnginx + php-fpmを起動
-CMD ["/usr/bin/supervisord"]
+# CMD ["/usr/bin/supervisord"]
+CMD ["sleep", "infinity"]
