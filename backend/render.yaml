@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: muu-stock
+    env: docker
+    plan: free
+    branch: main
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: dpg-xxxxxx  # Internal Host
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        value: xxxxxx
+      - key: DB_USERNAME
+        value: xxxxxx
+      - key: DB_PASSWORD
+        sync: false
