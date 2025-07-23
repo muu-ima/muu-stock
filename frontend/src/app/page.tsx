@@ -3,6 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import ProductForm, { ProductFormData } from '@/components/ProductForm';
 
+const getToday = (): string => {
+  const today = new Date();
+  return today.toISOString().slice(0, 10);
+};
+
 type Stock = {
   id: number;
   title: string;
